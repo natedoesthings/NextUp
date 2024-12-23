@@ -6,11 +6,11 @@
 //
 import SwiftUI
 
-struct CategorySelectionView: View {
+struct ExperienceSelectionView: View {
     @State private var selectedTopic: String? = nil
-    @State private var currentStep: Double = 0.00
+    @State private var currentStep: Double = 0.5
     
-    let topics = ["Programming", "Cooking", "Painting", "Music", "Photography"]
+    let topics = ["Beginner", "Intermediate", "Advanced"]
     
     var body: some View {
         VStack {
@@ -20,14 +20,14 @@ struct CategorySelectionView: View {
                 .tint(Color(hex: "#00B3FF"))
             
             VStack(alignment: .leading, spacing: 10) {
-                Text("What would you like to learn?")
+                Text("Where are you starting?")
                     .font(.system(size:28, weight: .bold))
                     .foregroundColor(.black)
                     .bold()
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 10)
                 
-                Text("Choose your top interest.")
+                Text("Choose the option that best matches your experience level.")
                     .font(.system(size:15))
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.leading)
@@ -69,7 +69,7 @@ struct CategorySelectionView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: ProgrammingSelectionView()) {
+                NavigationLink(destination: LearningStyleSelectionView()) {
                     Text("Next")
                         .font(.system(size:15, weight: .semibold))
                         .foregroundColor(.white)
@@ -87,5 +87,5 @@ struct CategorySelectionView: View {
 }
 
 #Preview {
-    CategorySelectionView()
+    ExperienceSelectionView()
 }

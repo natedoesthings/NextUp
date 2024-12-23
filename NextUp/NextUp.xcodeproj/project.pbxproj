@@ -13,6 +13,12 @@
 		192FACA82D19523F00250586 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FACA72D19523F00250586 /* Color.swift */; };
 		192FACAA2D19524100250586 /* CategorySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FACA92D19524100250586 /* CategorySelectionView.swift */; };
 		192FACAD2D19524600250586 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 192FACAB2D19524600250586 /* Assets.xcassets */; };
+		19925F912D19DD140024656A /* ProgrammingSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19925F902D19DD140024656A /* ProgrammingSelectionView.swift */; };
+		19925F932D19DD400024656A /* ExperienceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19925F922D19DD400024656A /* ExperienceSelectionView.swift */; };
+		19925F952D19DD560024656A /* LearningStyleSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19925F942D19DD560024656A /* LearningStyleSelectionView.swift */; };
+		19925F992D19DF6F0024656A /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19925F982D19DF6F0024656A /* DashboardView.swift */; };
+		19925F9B2D19FB1D0024656A /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19925F9A2D19FB1D0024656A /* SignUpView.swift */; };
+		19925F9D2D1A05780024656A /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19925F9C2D1A05740024656A /* CardView.swift */; };
 		FE11C8A92D190C4600CABB78 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE11C8A82D190C4600CABB78 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +29,12 @@
 		192FACA72D19523F00250586 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		192FACA92D19524100250586 /* CategorySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectionView.swift; sourceTree = "<group>"; };
 		192FACAB2D19524600250586 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		19925F902D19DD140024656A /* ProgrammingSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammingSelectionView.swift; sourceTree = "<group>"; };
+		19925F922D19DD400024656A /* ExperienceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceSelectionView.swift; sourceTree = "<group>"; };
+		19925F942D19DD560024656A /* LearningStyleSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningStyleSelectionView.swift; sourceTree = "<group>"; };
+		19925F982D19DF6F0024656A /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		19925F9A2D19FB1D0024656A /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		19925F9C2D1A05740024656A /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		FE11C89E2D190C4200CABB78 /* NextUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE11C8A82D190C4600CABB78 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +83,12 @@
 				192FACA32D19523900250586 /* ContentView.swift */,
 				192FACA72D19523F00250586 /* Color.swift */,
 				192FACA92D19524100250586 /* CategorySelectionView.swift */,
+				19925F902D19DD140024656A /* ProgrammingSelectionView.swift */,
+				19925F922D19DD400024656A /* ExperienceSelectionView.swift */,
+				19925F942D19DD560024656A /* LearningStyleSelectionView.swift */,
+				19925F9A2D19FB1D0024656A /* SignUpView.swift */,
+				19925F982D19DF6F0024656A /* DashboardView.swift */,
+				19925F9C2D1A05740024656A /* CardView.swift */,
 				FE11C8A72D190C4600CABB78 /* Preview Content */,
 			);
 			path = NextUp;
@@ -155,9 +173,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				192FACA42D19523900250586 /* ContentView.swift in Sources */,
+				19925F9B2D19FB1D0024656A /* SignUpView.swift in Sources */,
+				19925F932D19DD400024656A /* ExperienceSelectionView.swift in Sources */,
+				19925F992D19DF6F0024656A /* DashboardView.swift in Sources */,
 				192FACA82D19523F00250586 /* Color.swift in Sources */,
 				192FACA22D19522600250586 /* NextUpApp.swift in Sources */,
+				19925F912D19DD140024656A /* ProgrammingSelectionView.swift in Sources */,
+				19925F952D19DD560024656A /* LearningStyleSelectionView.swift in Sources */,
 				192FACAA2D19524100250586 /* CategorySelectionView.swift in Sources */,
+				19925F9D2D1A05780024656A /* CardView.swift in Sources */,
 				192FACA62D19523C00250586 /* LoadingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
