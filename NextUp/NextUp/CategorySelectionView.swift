@@ -82,6 +82,7 @@ struct CategorySelectionView: View {
             }
             .padding()
         }
+        .background(Color.white)
     }
 }
 
