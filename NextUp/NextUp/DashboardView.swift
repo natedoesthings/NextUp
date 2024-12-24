@@ -20,95 +20,112 @@ struct DashboardView: View {
         ("Swift over Coffee", "Podcast", "https://is1-ssl.mzstatic.com/image/thumb/Podcasts125/v4/53/b2/7c/53b27c14-23ff-06a5-2eb5-1c2ba6855828/mza_7272686623588747909.jpg/300x300bb.webp")
     ]
     
+    let cookingRecommendations = [
+        ("Easy Pasta Recipes", "Video", "https://example.com/pasta.jpg"),
+        ("Mastering Baking Basics", "Article", "https://example.com/baking.jpg"),
+        ("Healthy Meal Prepping", "Course", "https://example.com/meals.jpg"),
+        ("Culinary Arts Podcast", "Podcast", "https://example.com/podcast.jpg")
+    ]
+    
+    let artRecommendations = [
+        ("Intro to Watercolors", "Video", "https://example.com/watercolors.jpg"),
+        ("Sketching Basics", "Article", "https://example.com/sketching.jpg"),
+        ("Learn Acrylic Painting", "Course", "https://example.com/acrylic.jpg"),
+        ("Art History Podcast", "Podcast", "https://example.com/arthistory.jpg")
+    ]
+    
     var body: some View {
         TabView {
             // Explore Tab
             GeometryReader { geometry in
-                VStack {
-                    HStack {
-                        Button(action: {
-                            showSearch.toggle()
-                        }) {
-                            Image(systemName: "magnifyingglass")
-                                .font(.title2)
-                        }
-                        .padding(.leading, 15)
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            print("Saved button selected")
-                        }) {
-                            Image(systemName: "heart")
-                                .font(.title2)
-                        }
-                        .padding(.trailing, 15)
-                    }
-                    .padding(.top, 10)
-                    
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text("Welcome back, \(userName).")
-                            .font(.title)
-                            .fontWeight(.heavy)
-                            .padding(.bottom, 10)
-                        
-                        Text("Ready to pick up where you left off?")
-                            .font(.system(size: 15))
-                            .foregroundColor(.gray)
-                            .padding(.bottom, 20)
-                        
-                        // Recent Learning Material
-                        CardView(content: recentContent, type: "Tutorial", imageUrl: "https://images.javatpoint.com/tutorial/swift/images/swift-tutorial.png")
-                            .frame(maxWidth: .infinity)
-                            .padding(.bottom, 20)
-                        
-                        // Recommended Content
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack {
-                                Text("Perfect for you")
-                                    .font(.headline)
-                                    .padding(.bottom, 10)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                
-                                Button(action: {
-                                    withAnimation {
-                                        isExpanded.toggle()
-                                    }
-                                }) {
-                                    Text(isExpanded ? "See less" : "See more")
-                                        .font(.subheadline)
-                                        .foregroundColor(.accentColor)
-                                        .padding(.bottom, 10)
-                                }
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+                ScrollView {
+                    VStack {
+                        HStack {
+                            Button(action: {
+                                showSearch.toggle()
+                            }) {
+                                Image(systemName: "magnifyingglass")
+                                    .font(.title2)
                             }
+                            .padding(.leading, 15)
                             
-                            // Show content in carousel or grid view
-                            if isExpanded {
-                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                                    ForEach(recommendations, id: \.0) { recommendation in
-                                        CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
-                                            .frame(height: 240)
-                                            .clipped()
+                            Spacer()
+                            
+                            Button(action: {
+                                print("Saved button selected")
+                            }) {
+                                Image(systemName: "heart")
+                                    .font(.title2)
+                            }
+                            .padding(.trailing, 15)
+                        }
+                        .padding(.top, 10)
+                        
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Welcome back, \(userName).")
+                                .font(.title)
+                                .fontWeight(.heavy)
+                                .padding(.bottom, 10)
+                            
+                            Text("Ready to pick up where you left off?")
+                                .font(.system(size: 15))
+                                .foregroundColor(.gray)
+                                .padding(.bottom, 20)
+                            
+                            // Recent Learning Material
+                            CardView(content: recentContent, type: "Tutorial", imageUrl: "https://images.javatpoint.com/tutorial/swift/images/swift-tutorial.png")
+                                .frame(width: UIScreen.main.bounds.width * 0.9, height: 240)
+                                .padding(.bottom, 20)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            
+                            // Recommended Content
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack {
+                                    Text("Perfect for you")
+                                        .font(.headline)
+                                        .padding(.bottom, 10)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    Button(action: {
+                                        withAnimation {
+                                            isExpanded.toggle()
+                                        }
+                                    }) {
+                                        Text(isExpanded ? "See less" : "See more")
+                                            .font(.subheadline)
+                                            .foregroundColor(.accentColor)
+                                            .padding(.bottom, 10)
                                     }
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
                                 }
-                                .frame(height: geometry.size.height * 0.5)
-                            } else {
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 15) {
+                                
+                                // Show content in carousel or grid view
+                                if isExpanded {
+                                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
                                         ForEach(recommendations, id: \.0) { recommendation in
                                             CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
-                                                .frame(width: UIScreen.main.bounds.width * 0.8, height: 240)
+                                                .frame(height: 240)
                                                 .clipped()
+                                        }
+                                    }
+                                    .frame(height: geometry.size.height * 0.5)
+                                } else {
+                                    ScrollView(.horizontal, showsIndicators: false) {
+                                        HStack(spacing: 15) {
+                                            ForEach(recommendations, id: \.0) { recommendation in
+                                                CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
+                                                    .frame(width: UIScreen.main.bounds.width * 0.8, height: 240)
+                                                    .clipped()
+                                            }
                                         }
                                     }
                                 }
                             }
+                            .padding(.top, 30)
                         }
-                        .padding(.top, 30)
+                        .padding()
+                        .padding(.top, 25)
                     }
-                    .padding()
-                    .padding(.top, 25)
                 }
             }
             .tabItem {
@@ -116,11 +133,83 @@ struct DashboardView: View {
             }
             
             // Categories Tab
-            Text("Categories View")
-                .tabItem {
-                    Label("Categories", systemImage: "square.grid.2x2")
+            GeometryReader { geometry in
+                ScrollView {
+                    VStack {
+                        HStack {
+                            Button(action: {
+                                showSearch.toggle()
+                            }) {
+                                Image(systemName: "magnifyingglass")
+                                    .font(.title2)
+                            }
+                            .padding(.leading, 15)
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                print("Saved button selected")
+                            }) {
+                                Image(systemName: "heart")
+                                    .font(.title2)
+                            }
+                            .padding(.trailing, 15)
+                        }
+                        .padding(.top, 10)
+                        
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Try something new.")
+                                .font(.title)
+                                .fontWeight(.heavy)
+                                .padding(.bottom, 10)
+                            
+                            Text("Find your next focus and continue learning.")
+                                .font(.system(size: 15))
+                                .foregroundColor(.gray)
+                                .padding(.bottom, 20)
+                            
+                            // Cooking Carousel
+                            VStack(alignment: .leading) {
+                                Text("Cooking")
+                                    .font(.headline)
+                                
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 15) {
+                                        ForEach(cookingRecommendations, id: \.0) { recommendation in
+                                            CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
+                                                .frame(width: UIScreen.main.bounds.width * 0.8, height: 240)
+                                                .clipped()
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            // Art Carousel
+                            VStack(alignment: .leading) {
+                                Text("Art")
+                                    .font(.headline)
+                                
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 15) {
+                                        ForEach(artRecommendations, id: \.0) { recommendation in
+                                            CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
+                                                .frame(width: UIScreen.main.bounds.width * 0.8, height: 240)
+                                                .clipped()
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.top, 30)
+                        }
+                        .padding()
+                        .padding(.top, 25)
+                    }
                 }
-            
+            }
+            .tabItem {
+                Label("Categories", systemImage: "square.grid.2x2")
+            }
+
             // Projects Tab
             Text("Projects View")
                 .tabItem {
