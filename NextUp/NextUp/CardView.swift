@@ -12,18 +12,21 @@ struct CardView: View {
     let type: String
     let imageUrl: String
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: 0) {
             // Image at the top of the card
             AsyncImage(url: URL(string: imageUrl)) { image in
                 image
                     .resizable()
                     .scaledToFill()
-                    .frame(height: 120)
+                    .scaleEffect(1.1)
+                    .frame(maxWidth: .infinity, minHeight: 120)
                     .clipped()
             } placeholder: {
                 Color.gray
-                    .frame(height: 120)
+                    .frame(maxWidth: .infinity, minHeight: 120)
             }
             
             // Title and description at the bottom of the card
@@ -33,11 +36,12 @@ struct CardView: View {
                     .foregroundColor(.gray)
                 Text(content)
                     .font(.headline)
-                    .padding(.bottom, 2)
-
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .frame(width: 200, height: 50)
-            .background(Color(hex: "#F8F9FE"))
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(colorScheme == .dark ? Color(hex: "#2D2D2D") : Color(hex: "#F8F9FE"))
             /*
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
@@ -45,8 +49,9 @@ struct CardView: View {
             )
              */
         }
-        .frame(width: 200, height: 170)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(colorScheme == .dark ? Color(hex: "#1A1A1A") : Color.white)
         .cornerRadius(10)
-
+        .shadow(color: colorScheme == .dark ? Color.black.opacity(0.3) : Color.gray.opacity(0.2), radius: 5, x: 0, y:2)
     }
 }

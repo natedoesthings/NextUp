@@ -40,7 +40,7 @@ struct SignUpView: View {
                     .padding()
                     .background(Color.white)
                     .cornerRadius(10)
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "D3D3D3"), lineWidth: 1))
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
                     .padding(.bottom, 10)
                 
                 // Email
@@ -58,7 +58,7 @@ struct SignUpView: View {
                     .padding()
                     .background(Color.white)
                     .cornerRadius(10)
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "D3D3D3"), lineWidth: 1))
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
                 
                 // Confirm Password
                 SecureField("Confirm Password", text: $confirmPassword)

@@ -8,11 +8,9 @@ import SwiftUI
 
 struct DashboardView: View {
     @State private var selectedTopic: String? = nil
-    //@State private var currentStep: Double = 0.75
     @State private var userName: String = "Yonatan"
     @State private var showSearch: Bool = false
-    
-    //let topics = ["Learn Programming", "Create Projects", "Join a Community", "Explore Resources"]
+    @State private var isExpanded: Bool = false
     
     let recentContent = "Learn Swift Programming"
     let recommendations = [
@@ -25,80 +23,93 @@ struct DashboardView: View {
     var body: some View {
         TabView {
             // Explore Tab
-            VStack {
-                HStack {
-                    Button(action: {
-                        showSearch.toggle()
-                    }) {
-                        Image(systemName: "magnifyingglass")
-                            .font(.title2)
-                            .foregroundColor(.black)
+            GeometryReader { geometry in
+                VStack {
+                    HStack {
+                        Button(action: {
+                            showSearch.toggle()
+                        }) {
+                            Image(systemName: "magnifyingglass")
+                                .font(.title2)
+                        }
+                        .padding(.leading, 15)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            print("Saved button selected")
+                        }) {
+                            Image(systemName: "heart")
+                                .font(.title2)
+                        }
+                        .padding(.trailing, 15)
                     }
-                    .padding(.leading, 15)
+                    .padding(.top, 10)
                     
-                    Spacer()
-                    
-                    Button(action: {
-                        print("Saved button selected")
-                    }) {
-                        Image(systemName: "heart")
-                            .font(.title2)
-                            .foregroundColor(.black)
-                    }
-                    .padding(.trailing, 15)
-                }
-                .padding(.top, 10)
-                
-                VStack(alignment: .leading, spacing: 20) {
-                    Text("Welcome back, \(userName).")
-                        .font(.system(size:28, weight: .heavy))
-                        .foregroundColor(.black)
-                        .padding(.bottom, 10)
-                    
-                    Text("Ready to pick up where you left off?")
-                        .font(.system(size:15))
-                        .foregroundColor(.gray)
-                        .padding(.bottom, 20)
-                    
-                    // Recent Learning Material
-                    VStack {
-                         CardView(content: recentContent, type: "Tutorial", imageUrl: "https://images.javatpoint.com/tutorial/swift/images/swift-tutorial.png")
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Welcome back, \(userName).")
+                            .font(.title)
+                            .fontWeight(.heavy)
+                            .padding(.bottom, 10)
+                        
+                        Text("Ready to pick up where you left off?")
+                            .font(.system(size: 15))
+                            .foregroundColor(.gray)
+                            .padding(.bottom, 20)
+                        
+                        // Recent Learning Material
+                        CardView(content: recentContent, type: "Tutorial", imageUrl: "https://images.javatpoint.com/tutorial/swift/images/swift-tutorial.png")
                             .frame(maxWidth: .infinity)
                             .padding(.bottom, 20)
-                    }
-                    
-                    // Recomended Content
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Text("Perfect for you")
-                                .font(.headline)
-                                .padding(.bottom, 10)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Button(action: {
-                                print("See more recommendations button selected")
-                            }) {
-                                Text("See more")
-                                    .font(.subheadline)
-                                    .foregroundColor(.blue)
-                                    .padding(.bottom, 10)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                        }
                         
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 15) {
-                                ForEach(recommendations, id: \.0) { recommendation in CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
+                        // Recommended Content
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack {
+                                Text("Perfect for you")
+                                    .font(.headline)
+                                    .padding(.bottom, 10)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Button(action: {
+                                    withAnimation {
+                                        isExpanded.toggle()
+                                    }
+                                }) {
+                                    Text(isExpanded ? "See less" : "See more")
+                                        .font(.subheadline)
+                                        .foregroundColor(.accentColor)
+                                        .padding(.bottom, 10)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                            }
+                            
+                            // Show content in carousel or grid view
+                            if isExpanded {
+                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
+                                    ForEach(recommendations, id: \.0) { recommendation in
+                                        CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
+                                            .frame(height: 240)
+                                            .clipped()
+                                    }
+                                }
+                                .frame(height: geometry.size.height * 0.5)
+                            } else {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 15) {
+                                        ForEach(recommendations, id: \.0) { recommendation in
+                                            CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
+                                                .frame(width: UIScreen.main.bounds.width * 0.8, height: 240)
+                                                .clipped()
+                                        }
+                                    }
                                 }
                             }
                         }
-                        
+                        .padding(.top, 30)
                     }
-                    .padding(.top, 30)
-                    Spacer()
+                    .padding()
+                    .padding(.top, 25)
                 }
-                .padding()
-                .padding(.top, 25)
             }
             .tabItem {
                 Label("Explore", systemImage: "safari")
