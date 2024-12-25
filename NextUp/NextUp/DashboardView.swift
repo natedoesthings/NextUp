@@ -7,8 +7,12 @@
 import SwiftUI
 
 struct DashboardView: View {
+    
+    var userName: String
+    var userEmail: String
+    
     @State private var selectedTopic: String? = nil
-    @State private var userName: String = "Yonatan"
+//    @State private var userName: String = "Yonatan"
     @State private var showSearch: Bool = false
     @State private var isExpanded: Bool = false
     
@@ -217,7 +221,8 @@ struct DashboardView: View {
                 }
             
             // Profile Tab
-            Text("Profile View")
+            Text("Profile")
+            
                 .tabItem {
                     Label("Profile", systemImage: "person")
                 }
@@ -228,5 +233,5 @@ struct DashboardView: View {
 }
 
 #Preview {
-    DashboardView()
+    DashboardView(userName: "Yonatan", userEmail: "yizzo@gmail.com")
 }
