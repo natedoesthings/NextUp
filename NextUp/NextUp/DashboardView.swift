@@ -13,10 +13,15 @@ struct DashboardView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    @State private var selectedTopic: String? = nil
-//    @State private var userName: String = "Yonatan"
+    @State private var selectedTab: String = "To do"
     @State private var showSearch: Bool = false
     @State private var isExpanded: Bool = false
+    // Will likely move this to UserDefaults
+    @State private var projects = [
+        "To do": [String](),
+        "In progress": [String](),
+        "Finished": [String]()
+    ]
     
     let recentContent = "Learn Swift Programming"
     let recommendations = [
@@ -153,6 +158,7 @@ struct DashboardView: View {
                                 }) {
                                     Image(systemName: "magnifyingglass")
                                         .font(.title2)
+                                        .fontWeight(.heavy)
                                         //.foregroundColor(.black)
                                 }
                                 .padding(.leading, 15)
@@ -164,6 +170,7 @@ struct DashboardView: View {
                                 }) {
                                     Image(systemName: "heart")
                                         .font(.title2)
+                                        .fontWeight(.heavy)
                                         //.foregroundColor(.black)
                                 }
                                 .padding(.trailing, 15)
@@ -224,10 +231,140 @@ struct DashboardView: View {
                 }
                 
                 // Projects Tab
-                Text("Projects View")
-                    .tabItem {
-                        Label("Projects", systemImage: "pencil")
+                GeometryReader { geometry in
+                    ScrollView {
+                        VStack(spacing: 0) {
+                            Text("Projects")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .padding()
+                            
+                            Picker("Select Tab", selection: $selectedTab) {
+                                Text("To do").tag("To do")
+                                Text("In progress").tag("In progress")
+                                Text("Finished").tag("Finished")
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            .padding(.horizontal)
+                            .padding(.top, 10)
+                                                        
+                            if selectedTab == "To do" {
+                                if projects["To do"]?.isEmpty ?? true {
+                                    VStack {
+                                        /*
+                                         Image(systemName: "doc.text.fill")
+                                         .resizable()
+                                         .scaledToFit()
+                                         .frame(width: 100, height: 100)
+                                         .padding()
+                                         */
+                                        
+                                        Text("Nothing here. For now.")
+                                            .font(.title2)
+                                            .fontWeight(.heavy)
+                                            .multilineTextAlignment(.center)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .frame(width: geometry.size.width * 0.6)
+                                            .padding(.top)
+                                            .padding(.bottom, 5)
+                                        
+                                        Text("This is where you'll find your planned projects.")
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                            .multilineTextAlignment(.center)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .frame(width: geometry.size.width * 0.6)
+                                            .padding(.bottom)
+                                        
+                                        Button("Start a project") {
+                                            print("add project to To do")
+                                        }
+                                        .padding()
+                                        .background(Color(hex: "#00B3FF"))
+                                        .foregroundColor(.white)
+                                        .font(.system(size:15, weight: .semibold))
+                                        .cornerRadius(15)
+                                    }
+                                    .frame(height: geometry.size.height * 0.8)
+                                } else {
+                                    ForEach(projects["To do"] ?? [], id: \.self) { project in Text(project)
+                                    }
+                                }
+                            } else if selectedTab == "In progress" {
+                                if projects["In progress"]?.isEmpty ?? true {
+                                    VStack {
+                                        Text("Nothing here. For now.")
+                                            .font(.title2)
+                                            .fontWeight(.heavy)
+                                            .multilineTextAlignment(.center)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .frame(width: geometry.size.width * 0.6)
+                                            .padding(.top)
+                                            .padding(.bottom, 5)
+                                        
+                                        Text("This is where you'll find your in progress projects.")
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                            .multilineTextAlignment(.center)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .frame(width: geometry.size.width * 0.6)
+                                            .padding(.bottom)
+                                        
+                                        Button("Start a project") {
+                                            print("add project to To do")
+                                        }
+                                        .padding()
+                                        .background(Color(hex: "#00B3FF"))
+                                        .foregroundColor(.white)
+                                        .font(.system(size:15, weight: .semibold))
+                                        .cornerRadius(15)
+                                    }
+                                    .frame(height: geometry.size.height * 0.8)
+                                } else {
+                                    ForEach(projects["In progress"] ?? [], id: \.self) { project in Text(project)
+                                    }
+                                }
+                            } else if selectedTab == "Finished" {
+                                if projects["Finished"]?.isEmpty ?? true {
+                                    VStack {
+                                        Text("Nothing here. For now.")
+                                            .font(.title2)
+                                            .fontWeight(.heavy)
+                                            .multilineTextAlignment(.center)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .frame(width: geometry.size.width * 0.6)
+                                            .padding(.top)
+                                            .padding(.bottom, 5)
+                                        
+                                        Text("This is where you'll find your finished projects.")
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                            .multilineTextAlignment(.center)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .frame(width: geometry.size.width * 0.6)
+                                            .padding(.bottom)
+                                        
+                                        Button("Start a project") {
+                                            print("add project to To do")
+                                        }
+                                        .padding()
+                                        .background(Color(hex: "#00B3FF"))
+                                        .foregroundColor(.white)
+                                        .font(.system(size:15, weight: .semibold))
+                                        .cornerRadius(15)
+                                    }
+                                    .frame(height: geometry.size.height * 0.8)
+                                } else {
+                                    ForEach(projects["Finished"] ?? [], id: \.self) { project in Text(project)
+                                    }
+                                }
+                            }
+                        }
                     }
+                }
+                .tabItem {
+                    Label("Projects", systemImage: "pencil")
+                }
                 
                 // Profile Tab
                 Text("Profile")

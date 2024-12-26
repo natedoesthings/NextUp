@@ -23,105 +23,105 @@ struct SignUpView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                ProgressView(value: currentStep, total: 1.0)
-                    .progressViewStyle(LinearProgressViewStyle())
-                    .padding()
-                    .tint(Color(hex: "#00B3FF"))
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Finish creating your account.")
-                        .font(.title)
-                        .fontWeight(.heavy)
-                        .multilineTextAlignment(.leading)
-                        .padding(.bottom, 10)
-                    
-                    Text("Enter your details.")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.leading)
-                        .padding(.bottom, 50)
-                    
-                    // Name
-                    TextField("Name", text: $name)
+            ScrollView {
+                VStack {
+                    ProgressView(value: currentStep, total: 1.0)
+                        .progressViewStyle(LinearProgressViewStyle())
                         .padding()
-                        //.background(Color.white)
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
-                        .padding(.bottom, 10)
+                        .tint(Color(hex: "#00B3FF"))
                     
-                    // Email
-                    TextField("Email Address", text: $email)
-                        .padding()
-                        .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
-                        //.background(Color.white)
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
-                        .padding(.bottom, 10)
-                    
-                    // Password
-                    SecureField("Password", text: $password)
-                        .padding()
-                        //.background(Color.white)
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
-                    
-                    // Confirm Password
-                    SecureField("Confirm Password", text: $confirmPassword)
-                        .padding()
-                        //.background(Color.white)
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
-                        .padding(.bottom, 20)
-                    
-                    // Terms and Conditions
-                    HStack {
-                        Button(action: {
-                            acceptTerms.toggle()
-                        }) {
-                            Image(systemName: acceptTerms ? "checkmark.square.fill" : "square")
-                                .resizable()
-                                .frame(width: 25, height: 25)
-                                .foregroundColor(acceptTerms ? Color(hex: "#00B3FF") : .gray)
-                        }
-                        Text("I've read and agree with the Terms and Conditions and Privacy Policy.")
-                            .font(.system(size: 15))
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Finish creating your account.")
+                            .font(.title)
+                            .fontWeight(.heavy)
+                            .multilineTextAlignment(.leading)
+                            .padding(.bottom, 10)
+                        
+                        Text("Enter your details.")
+                            .font(.subheadline)
                             .foregroundColor(.gray)
-                    }
-                    .padding(.bottom, 30)
-
-                    Spacer()
-                    
-                    Button(action: {
-                        if validateInputs() {
-                            saveUserDetails()
-                            navigateToDashboard = true
-                        }
-                    }) {
-                        Text("Submit")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundColor(.white)
+                            .multilineTextAlignment(.leading)
+                            .padding(.bottom, 50)
+                        
+                        // Name
+                        TextField("Name", text: $name)
                             .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(isSubmitDisabled ? Color.gray : Color(hex: "#00B3FF"))
+                        //.background(Color.white)
                             .cornerRadius(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
+                            .padding(.bottom, 10)
+                        
+                        // Email
+                        TextField("Email Address", text: $email)
+                            .padding()
+                            .keyboardType(.emailAddress)
+                            .autocapitalization(.none)
+                        //.background(Color.white)
+                            .cornerRadius(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
+                            .padding(.bottom, 10)
+                        
+                        // Password
+                        SecureField("Password", text: $password)
+                            .padding()
+                        //.background(Color.white)
+                            .cornerRadius(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
+                        
+                        // Confirm Password
+                        SecureField("Confirm Password", text: $confirmPassword)
+                            .padding()
+                        //.background(Color.white)
+                            .cornerRadius(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
+                            .padding(.bottom, 20)
+                        
+                        // Terms and Conditions
+                        HStack {
+                            Button(action: {
+                                acceptTerms.toggle()
+                            }) {
+                                Image(systemName: acceptTerms ? "checkmark.square.fill" : "square")
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                                    .foregroundColor(acceptTerms ? Color(hex: "#00B3FF") : .gray)
+                            }
+                            Text("I've read and agree with the Terms and Conditions and Privacy Policy.")
+                                .font(.system(size: 15))
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.bottom, 30)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            if validateInputs() {
+                                saveUserDetails()
+                                navigateToDashboard = true
+                            }
+                        }) {
+                            Text("Submit")
+                                .font(.system(size: 15, weight: .semibold))
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(isSubmitDisabled ? Color.gray : Color(hex: "#00B3FF"))
+                                .cornerRadius(10)
+                        }
+                        .disabled(isSubmitDisabled)
+                        .padding(.top, 10)
                     }
-                    .disabled(isSubmitDisabled)
-                    .padding(.top, 10)
+                    .padding()
                 }
-                .padding()
-            }
-            //.background(Color.white)
-            .alert(isPresented: $showError) {
-                Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
-            }
-            .navigationDestination(isPresented: $navigateToDashboard) {
+                //.background(Color.white)
+                .alert(isPresented: $showError) {
+                    Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+                }
+                .navigationDestination(isPresented: $navigateToDashboard) {
                     DashboardView(userName: name, userEmail: email)
                 }
-            .navigationBarHidden(true)
-
-            
+                .navigationBarHidden(true)
+            }
         }
         
     }
