@@ -1,19 +1,20 @@
 //
-//  CategorySelectionView.swift
+//  ArtSelectionView.swift
 //  NextUp
 //
-//  Created by Yonatan Tussa on 12/22/24.
+//  Created by Yonatan Tussa on 12/25/24.
 //
+
 import SwiftUI
 
-struct LearningStyleSelectionView: View {
-    //@State private var selectedTopic: String? = nil
-    @State private var currentStep: Double = 0.75
-    @State private var learningStyle: [String] = []
+struct ArtSelectionView: View {
+    @State private var selectedTopic: String? = nil
+    @State private var currentStep: Double = 0.25
+    @State private var specificInterest: String = ""
     
     @Environment(\.colorScheme) var colorScheme
-    
-    let topics = ["Step-by-step instructions", "Hands-on projects", "Video tutorials", "Reading"]
+
+    let topics = ["Drawing", "Painting", "Photography", "Graphic Design"]
     
     var body: some View {
         VStack {
@@ -23,13 +24,13 @@ struct LearningStyleSelectionView: View {
                 .tint(Color(hex: "#00B3FF"))
             
             VStack(alignment: .leading, spacing: 10) {
-                Text("How do you prefer to learn?")
+                Text("Let's narrow things down.")
                     .font(.title)
                     .fontWeight(.heavy)
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 10)
                 
-                Text("Choose the approaches that work for you, so we can match your style.")
+                Text("Select a specific topic you'd like to focus on.")
                     .font(.subheadline)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.leading)
@@ -38,14 +39,12 @@ struct LearningStyleSelectionView: View {
                 
                 ForEach(topics, id: \.self) { topic in
                     Button(action: {
-                        if learningStyle.contains(topic) {
-                            //selectedTopic = nil
-                            if let index = learningStyle.firstIndex(of: topic) {
-                                learningStyle.remove(at: index)
-                            }
+                        if selectedTopic == topic {
+                            selectedTopic = nil
+                            specificInterest = ""
                         } else {
-                            //selectedTopic = topic
-                            learningStyle.append(topic)
+                            selectedTopic = topic
+                            specificInterest = topic
                         }
                     }) {
                         HStack {
@@ -54,7 +53,7 @@ struct LearningStyleSelectionView: View {
                                 .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .frame(maxWidth: .infinity, alignment: .leading)
 
-                            if learningStyle.contains(topic) {
+                            if selectedTopic == topic {
                                 Image(systemName: "checkmark.circle.fill")
                                     //.foregroundColor(.white)
                                     .padding(.leading, 10)
@@ -62,7 +61,7 @@ struct LearningStyleSelectionView: View {
                         }
                         .padding()
                         .background(
-                            learningStyle.contains(topic) ? Color.blue.opacity(0.2) : (colorScheme == .dark ? Color(hex: "#2D2D2D").opacity(0.3) : Color.white.opacity(0.3))
+                            selectedTopic == topic ? Color.blue.opacity(0.2) : (colorScheme == .dark ? Color(hex: "#2D2D2D").opacity(0.3) : Color.white.opacity(0.3))
                         )
                         .cornerRadius(10)
                         .overlay(
@@ -75,20 +74,20 @@ struct LearningStyleSelectionView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: SignUpView()) {
+                NavigationLink(destination: ExperienceSelectionView()) {
                     Text("Next")
                         .font(.system(size:15, weight: .semibold))
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(learningStyle.isEmpty ? Color.gray : Color(hex: "#00B3FF"))
+                        .background(specificInterest.isEmpty ? Color.gray : Color(hex: "#00B3FF"))
                         .cornerRadius(10)
                 }
                 .padding(.top, 10)
                 .simultaneousGesture(TapGesture().onEnded {
                     saveUserPreferences()
                 })
-                .disabled(learningStyle.isEmpty)
+                .disabled(specificInterest.isEmpty)
             }
             .padding()
         }
@@ -97,14 +96,14 @@ struct LearningStyleSelectionView: View {
     
     func saveUserPreferences() {
         let defaults = UserDefaults.standard
-        defaults.set(learningStyle, forKey: "learningStyle")
+        defaults.set(specificInterest, forKey: "specificInterest")
 
         // Debugging
-        let savedLearningStyle = UserDefaults.standard.array(forKey: "learningStyle") as? [String] ?? ["No Learning Style Selected"]
-        print("Saved learning style: \(savedLearningStyle)")
+        let savedInterest = UserDefaults.standard.string(forKey: "specificInterest") ?? "No Interest Selected"
+        print("Saved specific interest: \(savedInterest)")
     }
 }
 
 #Preview {
-    LearningStyleSelectionView()
+    ArtSelectionView()
 }

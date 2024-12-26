@@ -40,6 +40,8 @@ struct MainView: View {
         }
         .onAppear {
             loadUserDefaults()
+            // For testing
+            resetUserDefaults()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 withAnimation(.easeInOut(duration: 0.5)) {
                     showLoadingView = false
@@ -49,12 +51,24 @@ struct MainView: View {
     }
     
     func loadUserDefaults() {
-            let defaults = UserDefaults.standard
-            isUserSignedUp = defaults.bool(forKey: "isSignedUp")
-            if isUserSignedUp {
-                userName = defaults.string(forKey: "userName") ?? ""
-                userEmail = defaults.string(forKey: "userEmail") ?? ""
-            }
+        let defaults = UserDefaults.standard
+        isUserSignedUp = defaults.bool(forKey: "isSignedUp")
+        if isUserSignedUp {
+            userName = defaults.string(forKey: "userName") ?? ""
+            userEmail = defaults.string(forKey: "userEmail") ?? ""
         }
+    }
     
+    // For testing
+    func resetUserDefaults() {
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "isSignedUp")
+        defaults.removeObject(forKey: "userName")
+        defaults.removeObject(forKey: "userEmail")
+        defaults.removeObject(forKey: "userPassword")
+        defaults.removeObject(forKey: "topInterest")
+        defaults.removeObject(forKey: "specificInterest")
+        defaults.removeObject(forKey: "experienceLevel")
+        defaults.removeObject(forKey: "learningStyle")
+    }
 }

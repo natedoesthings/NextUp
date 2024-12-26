@@ -9,7 +9,10 @@ import SwiftUI
 struct ExperienceSelectionView: View {
     @State private var selectedTopic: String? = nil
     @State private var currentStep: Double = 0.5
+    @State private var experienceLevel: String = ""
     
+    @Environment(\.colorScheme) var colorScheme
+
     let topics = ["Beginner", "Intermediate", "Advanced"]
     
     var body: some View {
@@ -21,14 +24,13 @@ struct ExperienceSelectionView: View {
             
             VStack(alignment: .leading, spacing: 10) {
                 Text("Where are you starting?")
-                    .font(.system(size:28, weight: .bold))
-                    .foregroundColor(.black)
-                    .bold()
+                    .font(.title)
+                    .fontWeight(.heavy)
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 10)
                 
                 Text("Choose the option that best matches your experience level.")
-                    .font(.system(size:15))
+                    .font(.subheadline)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 50)
@@ -38,14 +40,16 @@ struct ExperienceSelectionView: View {
                     Button(action: {
                         if selectedTopic == topic {
                             selectedTopic = nil
+                            experienceLevel = ""
                         } else {
                             selectedTopic = topic
+                            experienceLevel = topic
                         }
                     }) {
                         HStack {
                             Text(topic)
                                 .font(.system(size: 18))
-                                .foregroundColor(.black)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .frame(maxWidth: .infinity, alignment: .leading)
 
                             if selectedTopic == topic {
@@ -56,7 +60,7 @@ struct ExperienceSelectionView: View {
                         }
                         .padding()
                         .background(
-                            selectedTopic == topic ? Color.blue.opacity(0.2) : Color.white.opacity(0.3)
+                            selectedTopic == topic ? Color.blue.opacity(0.2) : (colorScheme == .dark ? Color(hex: "#2D2D2D").opacity(0.3) : Color.white.opacity(0.3))
                         )
                         .cornerRadius(10)
                         .overlay(
@@ -75,14 +79,26 @@ struct ExperienceSelectionView: View {
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(Color(hex: "#00B3FF"))
+                        .background(experienceLevel.isEmpty ? Color.gray : Color(hex: "#00B3FF"))
                         .cornerRadius(10)
                 }
                 .padding(.top, 10)
+                .simultaneousGesture(TapGesture().onEnded {
+                    saveUserPreferences()
+                })
             }
             .padding()
         }
-        .background(Color.white)
+        //.background(Color.white)
+    }
+    
+    func saveUserPreferences() {
+        let defaults = UserDefaults.standard
+        defaults.set(experienceLevel, forKey: "experienceLevel")
+
+        // Debugging
+        let savedExperienceLevel = UserDefaults.standard.string(forKey: "experienceLevel") ?? "No Experience Level Selected"
+        print("Saved experience level: \(savedExperienceLevel)")
     }
 }
 

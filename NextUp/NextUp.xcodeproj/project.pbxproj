@@ -13,6 +13,8 @@
 		192FACA82D19523F00250586 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FACA72D19523F00250586 /* Color.swift */; };
 		192FACAA2D19524100250586 /* CategorySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FACA92D19524100250586 /* CategorySelectionView.swift */; };
 		192FACAD2D19524600250586 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 192FACAB2D19524600250586 /* Assets.xcassets */; };
+		19536C072D1D132B00F762F7 /* ArtSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19536C062D1D131A00F762F7 /* ArtSelectionView.swift */; };
+		19536C092D1D133A00F762F7 /* LanguageSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19536C082D1D133600F762F7 /* LanguageSelectionView.swift */; };
 		19925F912D19DD140024656A /* ProgrammingSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19925F902D19DD140024656A /* ProgrammingSelectionView.swift */; };
 		19925F932D19DD400024656A /* ExperienceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19925F922D19DD400024656A /* ExperienceSelectionView.swift */; };
 		19925F952D19DD560024656A /* LearningStyleSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19925F942D19DD560024656A /* LearningStyleSelectionView.swift */; };
@@ -29,6 +31,8 @@
 		192FACA72D19523F00250586 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		192FACA92D19524100250586 /* CategorySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectionView.swift; sourceTree = "<group>"; };
 		192FACAB2D19524600250586 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		19536C062D1D131A00F762F7 /* ArtSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtSelectionView.swift; sourceTree = "<group>"; };
+		19536C082D1D133600F762F7 /* LanguageSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionView.swift; sourceTree = "<group>"; };
 		19925F902D19DD140024656A /* ProgrammingSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammingSelectionView.swift; sourceTree = "<group>"; };
 		19925F922D19DD400024656A /* ExperienceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceSelectionView.swift; sourceTree = "<group>"; };
 		19925F942D19DD560024656A /* LearningStyleSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningStyleSelectionView.swift; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 				192FACA72D19523F00250586 /* Color.swift */,
 				192FACA92D19524100250586 /* CategorySelectionView.swift */,
 				19925F902D19DD140024656A /* ProgrammingSelectionView.swift */,
+				19536C062D1D131A00F762F7 /* ArtSelectionView.swift */,
+				19536C082D1D133600F762F7 /* LanguageSelectionView.swift */,
 				19925F922D19DD400024656A /* ExperienceSelectionView.swift */,
 				19925F942D19DD560024656A /* LearningStyleSelectionView.swift */,
 				19925F9A2D19FB1D0024656A /* SignUpView.swift */,
@@ -173,9 +179,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				192FACA42D19523900250586 /* ContentView.swift in Sources */,
+				19536C072D1D132B00F762F7 /* ArtSelectionView.swift in Sources */,
 				19925F9B2D19FB1D0024656A /* SignUpView.swift in Sources */,
 				19925F932D19DD400024656A /* ExperienceSelectionView.swift in Sources */,
 				19925F992D19DF6F0024656A /* DashboardView.swift in Sources */,
+				19536C092D1D133A00F762F7 /* LanguageSelectionView.swift in Sources */,
 				192FACA82D19523F00250586 /* Color.swift in Sources */,
 				192FACA22D19522600250586 /* NextUpApp.swift in Sources */,
 				19925F912D19DD140024656A /* ProgrammingSelectionView.swift in Sources */,
@@ -316,7 +324,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NextUp/Preview Content\"";
-				DEVELOPMENT_TEAM = P766MMY3WN;
+				DEVELOPMENT_TEAM = 2723AM728S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -345,7 +353,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NextUp/Preview Content\"";
-				DEVELOPMENT_TEAM = P766MMY3WN;
+				DEVELOPMENT_TEAM = 2723AM728S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

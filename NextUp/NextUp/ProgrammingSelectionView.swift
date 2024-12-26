@@ -9,7 +9,10 @@ import SwiftUI
 struct ProgrammingSelectionView: View {
     @State private var selectedTopic: String? = nil
     @State private var currentStep: Double = 0.25
+    @State private var specificInterest: String = ""
     
+    @Environment(\.colorScheme) var colorScheme
+
     let topics = ["Web Development", "Game Development", "Mobile Development", "Machine Learning"]
     
     var body: some View {
@@ -21,14 +24,13 @@ struct ProgrammingSelectionView: View {
             
             VStack(alignment: .leading, spacing: 10) {
                 Text("Let's narrow things down.")
-                    .font(.system(size:28, weight: .bold))
-                    .foregroundColor(.black)
-                    .bold()
+                    .font(.title)
+                    .fontWeight(.heavy)
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 10)
                 
                 Text("Select a specific topic you'd like to focus on.")
-                    .font(.system(size:15))
+                    .font(.subheadline)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 50)
@@ -38,14 +40,16 @@ struct ProgrammingSelectionView: View {
                     Button(action: {
                         if selectedTopic == topic {
                             selectedTopic = nil
+                            specificInterest = ""
                         } else {
                             selectedTopic = topic
+                            specificInterest = topic
                         }
                     }) {
                         HStack {
                             Text(topic)
                                 .font(.system(size: 18))
-                                .foregroundColor(.black)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .frame(maxWidth: .infinity, alignment: .leading)
 
                             if selectedTopic == topic {
@@ -56,7 +60,7 @@ struct ProgrammingSelectionView: View {
                         }
                         .padding()
                         .background(
-                            selectedTopic == topic ? Color.blue.opacity(0.2) : Color.white.opacity(0.3)
+                            selectedTopic == topic ? Color.blue.opacity(0.2) : (colorScheme == .dark ? Color(hex: "#2D2D2D").opacity(0.3) : Color.white.opacity(0.3))
                         )
                         .cornerRadius(10)
                         .overlay(
@@ -75,14 +79,27 @@ struct ProgrammingSelectionView: View {
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(Color(hex: "#00B3FF"))
+                        .background(specificInterest.isEmpty ? Color.gray : Color(hex: "#00B3FF"))
                         .cornerRadius(10)
                 }
                 .padding(.top, 10)
+                .simultaneousGesture(TapGesture().onEnded {
+                    saveUserPreferences()
+                })
+                .disabled(specificInterest.isEmpty)
             }
             .padding()
         }
-        .background(Color.white)
+        //.background(Color.white)
+    }
+    
+    func saveUserPreferences() {
+        let defaults = UserDefaults.standard
+        defaults.set(specificInterest, forKey: "specificInterest")
+
+        // Debugging
+        let savedInterest = UserDefaults.standard.string(forKey: "specificInterest") ?? "No Interest Selected"
+        print("Saved specific interest: \(savedInterest)")
     }
 }
 

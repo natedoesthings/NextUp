@@ -11,6 +11,8 @@ struct DashboardView: View {
     var userName: String
     var userEmail: String
     
+    @Environment(\.colorScheme) var colorScheme
+    
     @State private var selectedTopic: String? = nil
 //    @State private var userName: String = "Yonatan"
     @State private var showSearch: Bool = false
@@ -39,84 +41,154 @@ struct DashboardView: View {
     ]
     
     var body: some View {
-        TabView {
-            // Explore Tab
-            GeometryReader { geometry in
-                ScrollView {
-                    VStack {
-                        HStack {
-                            Button(action: {
-                                showSearch.toggle()
-                            }) {
-                                Image(systemName: "magnifyingglass")
-                                    .font(.title2)
-                            }
-                            .padding(.leading, 15)
-                            
-                            Spacer()
-                            
-                            Button(action: {
-                                print("Saved button selected")
-                            }) {
-                                Image(systemName: "heart")
-                                    .font(.title2)
-                            }
-                            .padding(.trailing, 15)
-                        }
-                        .padding(.top, 10)
-                        
-                        VStack(alignment: .leading, spacing: 20) {
-                            Text("Welcome back, \(userName).")
-                                .font(.title)
-                                .fontWeight(.heavy)
-                                .padding(.bottom, 10)
-                            
-                            Text("Ready to pick up where you left off?")
-                                .font(.system(size: 15))
-                                .foregroundColor(.gray)
-                                .padding(.bottom, 20)
-                            
-                            // Recent Learning Material
-                            CardView(content: recentContent, type: "Tutorial", imageUrl: "https://images.javatpoint.com/tutorial/swift/images/swift-tutorial.png")
-                                .frame(width: UIScreen.main.bounds.width * 0.9, height: 240)
-                                .padding(.bottom, 20)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                            
-                            // Recommended Content
-                            VStack(alignment: .leading, spacing: 10) {
-                                HStack {
-                                    Text("Perfect for you")
-                                        .font(.headline)
-                                        .padding(.bottom, 10)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    
-                                    Button(action: {
-                                        withAnimation {
-                                            isExpanded.toggle()
-                                        }
-                                    }) {
-                                        Text(isExpanded ? "See less" : "See more")
-                                            .font(.subheadline)
-                                            .foregroundColor(.accentColor)
-                                            .padding(.bottom, 10)
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
+        NavigationView {
+            TabView {
+                // Explore Tab
+                GeometryReader { geometry in
+                    ScrollView {
+                        VStack {
+                            HStack {
+                                Button(action: {
+                                    showSearch.toggle()
+                                }) {
+                                    Image(systemName: "magnifyingglass")
+                                        .font(.title2)
+                                        .fontWeight(.heavy)
+                                        //.foregroundColor(.black)
                                 }
+                                .padding(.leading, 15)
                                 
-                                // Show content in carousel or grid view
-                                if isExpanded {
-                                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
-                                        ForEach(recommendations, id: \.0) { recommendation in
-                                            CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
-                                                .frame(height: 240)
-                                                .clipped()
+                                Spacer()
+                                
+                                Button(action: {
+                                    print("Saved button selected")
+                                }) {
+                                    Image(systemName: "heart")
+                                        .font(.title2)
+                                        .fontWeight(.heavy)
+                                        //.foregroundColor(.black)
+                                }
+                                .padding(.trailing, 15)
+                            }
+                            .padding(.top, 10)
+                            
+                            VStack(alignment: .leading, spacing: 20) {
+                                Text("Welcome back, \(userName).")
+                                    .font(.title)
+                                    .fontWeight(.heavy)
+                                    .padding(.bottom, 10)
+                                
+                                Text("Ready to pick up where you left off?")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                    .padding(.bottom, 20)
+                                
+                                // Recent Learning Material
+                                CardView(content: recentContent, type: "Tutorial", imageUrl: "https://images.javatpoint.com/tutorial/swift/images/swift-tutorial.png")
+                                    .frame(width: UIScreen.main.bounds.width * 0.9, height: 240)
+                                    .padding(.bottom, 20)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                
+                                // Recommended Content
+                                VStack(alignment: .leading, spacing: 10) {
+                                    HStack {
+                                        Text("Perfect for you")
+                                            .font(.headline)
+                                            .padding(.bottom, 10)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                        Button(action: {
+                                            withAnimation {
+                                                isExpanded.toggle()
+                                            }
+                                        }) {
+                                            Text(isExpanded ? "See less" : "See more")
+                                                .font(.subheadline)
+                                                .foregroundColor(.accentColor)
+                                                .padding(.bottom, 10)
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                    }
+                                    
+                                    // Show content in carousel or grid view
+                                    if isExpanded {
+                                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
+                                            ForEach(recommendations, id: \.0) { recommendation in
+                                                CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
+                                                    .frame(height: 240)
+                                                    .clipped()
+                                            }
+                                        }
+                                        .frame(height: geometry.size.height * 0.5)
+                                    } else {
+                                        ScrollView(.horizontal, showsIndicators: false) {
+                                            HStack(spacing: 15) {
+                                                ForEach(recommendations, id: \.0) { recommendation in
+                                                    CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
+                                                        .frame(width: UIScreen.main.bounds.width * 0.8, height: 240)
+                                                        .clipped()
+                                                }
+                                            }
                                         }
                                     }
-                                    .frame(height: geometry.size.height * 0.5)
-                                } else {
+                                }
+                                .padding(.top, 30)
+                            }
+                            .padding()
+                            .padding(.top, 25)
+                        }
+                    }
+                }
+                .tabItem {
+                    Label("Explore", systemImage: "safari")
+                }
+                
+                // Categories Tab
+                GeometryReader { geometry in
+                    ScrollView {
+                        VStack {
+                            HStack {
+                                Button(action: {
+                                    showSearch.toggle()
+                                }) {
+                                    Image(systemName: "magnifyingglass")
+                                        .font(.title2)
+                                        //.foregroundColor(.black)
+                                }
+                                .padding(.leading, 15)
+                                
+                                Spacer()
+                                
+                                Button(action: {
+                                    print("Saved button selected")
+                                }) {
+                                    Image(systemName: "heart")
+                                        .font(.title2)
+                                        //.foregroundColor(.black)
+                                }
+                                .padding(.trailing, 15)
+                            }
+                            .padding(.top, 10)
+                            
+                            VStack(alignment: .leading, spacing: 20) {
+                                Text("Try something new.")
+                                    .font(.title)
+                                    .fontWeight(.heavy)
+                                    .padding(.bottom, 10)
+                                
+                                Text("Find your next focus and continue learning.")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(.gray)
+                                    .padding(.bottom, 20)
+                                
+                                // Cooking Carousel
+                                VStack(alignment: .leading) {
+                                    Text("Cooking")
+                                        .font(.headline)
+                                    
                                     ScrollView(.horizontal, showsIndicators: false) {
                                         HStack(spacing: 15) {
-                                            ForEach(recommendations, id: \.0) { recommendation in
+                                            ForEach(cookingRecommendations, id: \.0) { recommendation in
                                                 CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
                                                     .frame(width: UIScreen.main.bounds.width * 0.8, height: 240)
                                                     .clipped()
@@ -124,108 +196,58 @@ struct DashboardView: View {
                                         }
                                     }
                                 }
-                            }
-                            .padding(.top, 30)
-                        }
-                        .padding()
-                        .padding(.top, 25)
-                    }
-                }
-            }
-            .tabItem {
-                Label("Explore", systemImage: "safari")
-            }
-            
-            // Categories Tab
-            GeometryReader { geometry in
-                ScrollView {
-                    VStack {
-                        HStack {
-                            Button(action: {
-                                showSearch.toggle()
-                            }) {
-                                Image(systemName: "magnifyingglass")
-                                    .font(.title2)
-                            }
-                            .padding(.leading, 15)
-                            
-                            Spacer()
-                            
-                            Button(action: {
-                                print("Saved button selected")
-                            }) {
-                                Image(systemName: "heart")
-                                    .font(.title2)
-                            }
-                            .padding(.trailing, 15)
-                        }
-                        .padding(.top, 10)
-                        
-                        VStack(alignment: .leading, spacing: 20) {
-                            Text("Try something new.")
-                                .font(.title)
-                                .fontWeight(.heavy)
-                                .padding(.bottom, 10)
-                            
-                            Text("Find your next focus and continue learning.")
-                                .font(.system(size: 15))
-                                .foregroundColor(.gray)
-                                .padding(.bottom, 20)
-                            
-                            // Cooking Carousel
-                            VStack(alignment: .leading) {
-                                Text("Cooking")
-                                    .font(.headline)
                                 
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 15) {
-                                        ForEach(cookingRecommendations, id: \.0) { recommendation in
-                                            CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
-                                                .frame(width: UIScreen.main.bounds.width * 0.8, height: 240)
-                                                .clipped()
+                                // Art Carousel
+                                VStack(alignment: .leading) {
+                                    Text("Art")
+                                        .font(.headline)
+                                    
+                                    ScrollView(.horizontal, showsIndicators: false) {
+                                        HStack(spacing: 15) {
+                                            ForEach(artRecommendations, id: \.0) { recommendation in
+                                                CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
+                                                    .frame(width: UIScreen.main.bounds.width * 0.8, height: 240)
+                                                    .clipped()
+                                            }
                                         }
                                     }
                                 }
+                                .padding(.top, 30)
                             }
-                            
-                            // Art Carousel
-                            VStack(alignment: .leading) {
-                                Text("Art")
-                                    .font(.headline)
-                                
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 15) {
-                                        ForEach(artRecommendations, id: \.0) { recommendation in
-                                            CardView(content: recommendation.0, type: recommendation.1, imageUrl: recommendation.2)
-                                                .frame(width: UIScreen.main.bounds.width * 0.8, height: 240)
-                                                .clipped()
-                                        }
-                                    }
-                                }
-                            }
-                            .padding(.top, 30)
+                            .padding()
+                            .padding(.top, 25)
                         }
-                        .padding()
-                        .padding(.top, 25)
                     }
                 }
-            }
-            .tabItem {
-                Label("Categories", systemImage: "square.grid.2x2")
-            }
-
-            // Projects Tab
-            Text("Projects View")
                 .tabItem {
-                    Label("Projects", systemImage: "pencil")
+                    Label("Categories", systemImage: "square.grid.2x2")
                 }
-            
-            // Profile Tab
-            Text("Profile")
-            
-                .tabItem {
-                    Label("Profile", systemImage: "person")
-                }
+                
+                // Projects Tab
+                Text("Projects View")
+                    .tabItem {
+                        Label("Projects", systemImage: "pencil")
+                    }
+                
+                // Profile Tab
+                Text("Profile")
+                
+                    .tabItem {
+                        Label("Profile", systemImage: "person")
+                    }
+            }
+            .onAppear {
+                let appearance = UITabBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                // appearance.backgroundColor = UIColor.white
+                appearance.stackedLayoutAppearance.selected.iconColor = UIColor(Color(hex:"#00B3FF"))
+                appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: (colorScheme == .dark ? UIColor.white : UIColor.black)]
+                // appearance.stackedLayoutAppearance.normal.iconColor = UIColor(Color(hex: "#00B3FF"))
+                // appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.black]
+                
+                UITabBar.appearance().standardAppearance = appearance
+                UITabBar.appearance().scrollEdgeAppearance = appearance
+            }
         }
         .navigationBarBackButtonHidden(true)
         .accentColor(Color(hex: "#00B3FF"))

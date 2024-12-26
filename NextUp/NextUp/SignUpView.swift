@@ -17,6 +17,9 @@ struct SignUpView: View {
     @State private var errorMessage: String = ""
     @State private var navigateToDashboard = false
 
+    var isSubmitDisabled: Bool {
+        return name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty || !acceptTerms
+    }
     
     var body: some View {
         NavigationStack {
@@ -28,14 +31,13 @@ struct SignUpView: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Finish creating your account.")
-                        .font(.system(size:28, weight: .bold))
-                        .foregroundColor(.black)
-                        .bold()
+                        .font(.title)
+                        .fontWeight(.heavy)
                         .multilineTextAlignment(.leading)
                         .padding(.bottom, 10)
                     
                     Text("Enter your details.")
-                        .font(.system(size:15))
+                        .font(.subheadline)
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.leading)
                         .padding(.bottom, 50)
@@ -43,7 +45,7 @@ struct SignUpView: View {
                     // Name
                     TextField("Name", text: $name)
                         .padding()
-                        .background(Color.white)
+                        //.background(Color.white)
                         .cornerRadius(10)
                         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
                         .padding(.bottom, 10)
@@ -53,7 +55,7 @@ struct SignUpView: View {
                         .padding()
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
-                        .background(Color.white)
+                        //.background(Color.white)
                         .cornerRadius(10)
                         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
                         .padding(.bottom, 10)
@@ -61,14 +63,14 @@ struct SignUpView: View {
                     // Password
                     SecureField("Password", text: $password)
                         .padding()
-                        .background(Color.white)
+                        //.background(Color.white)
                         .cornerRadius(10)
                         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
                     
                     // Confirm Password
                     SecureField("Confirm Password", text: $confirmPassword)
                         .padding()
-                        .background(Color.white)
+                        //.background(Color.white)
                         .cornerRadius(10)
                         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
                         .padding(.bottom, 20)
@@ -80,8 +82,8 @@ struct SignUpView: View {
                         }) {
                             Image(systemName: acceptTerms ? "checkmark.square.fill" : "square")
                                 .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(acceptTerms ? .blue : .gray)
+                                .frame(width: 25, height: 25)
+                                .foregroundColor(acceptTerms ? Color(hex: "#00B3FF") : .gray)
                         }
                         Text("I've read and agree with the Terms and Conditions and Privacy Policy.")
                             .font(.system(size: 15))
@@ -102,21 +104,22 @@ struct SignUpView: View {
                             .foregroundColor(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.blue)
+                            .background(isSubmitDisabled ? Color.gray : Color(hex: "#00B3FF"))
                             .cornerRadius(10)
                     }
+                    .disabled(isSubmitDisabled)
                     .padding(.top, 10)
                 }
                 .padding()
             }
-            .background(Color.white)
+            //.background(Color.white)
             .alert(isPresented: $showError) {
                 Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
             }
             .navigationDestination(isPresented: $navigateToDashboard) {
                     DashboardView(userName: name, userEmail: email)
                 }
-            .navigationBarHidden(true) // Hides the navigation bar
+            .navigationBarHidden(true)
 
             
         }
