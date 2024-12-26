@@ -91,7 +91,7 @@ struct DashboardView: View {
                                 // Recent Learning Material
                                 CardView(content: recentContent, type: "Tutorial", imageUrl: "https://images.javatpoint.com/tutorial/swift/images/swift-tutorial.png")
                                     .frame(width: UIScreen.main.bounds.width * 0.9, height: 240)
-                                    .padding(.bottom, 20)
+                                    .padding(.bottom, 10)
                                     .frame(maxWidth: .infinity, alignment: .center)
                                 
                                 // Recommended Content
@@ -137,7 +137,7 @@ struct DashboardView: View {
                                         }
                                     }
                                 }
-                                .padding(.top, 30)
+                                .padding(.top, 20)
                             }
                             .padding()
                             .padding(.top, 25)
@@ -233,7 +233,7 @@ struct DashboardView: View {
                 // Projects Tab
                 GeometryReader { geometry in
                     ScrollView {
-                        VStack(spacing: 0) {
+                        VStack {
                             Text("Projects")
                                 .font(.headline)
                                 .fontWeight(.bold)
@@ -367,11 +367,110 @@ struct DashboardView: View {
                 }
                 
                 // Profile Tab
-                Text("Profile")
-                
-                    .tabItem {
-                        Label("Profile", systemImage: "person")
+                GeometryReader { geometry in
+                    ScrollView {
+                        VStack {
+                            Text("Profile")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .padding()
+                            
+                            VStack {
+                                
+                                Image("Avatar")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 110, height: 110)
+                                
+                                Text(UserDefaults.standard.string(forKey: "userName") ?? "User")
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .padding(.top, 10)
+                                
+                                Text(UserDefaults.standard.string(forKey: "topInterest") ?? "No interest set")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                                                        
+                            // Settings and Preferences Section
+                            VStack(alignment: .leading, spacing: 20) {
+                                // Preferences
+                                Button(action: {
+                                    print("Preferences tapped")
+                                }) {
+                                    HStack {
+                                        Text("Preferences")
+                                            .font(.body)
+                                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                                .padding()
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(10)
+                                
+                                // Notifications
+                                Button(action: {
+                                    print("Notifications tapped")
+                                }) {
+                                    HStack {
+                                        Text("Notifications")
+                                            .font(.body)
+                                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                                .padding()
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(10)
+                                
+                                // Privacy & Security
+                                Button(action: {
+                                    print("Privacy & Security tapped")
+                                }) {
+                                    HStack {
+                                        Text("Privacy & Security")
+                                            .font(.body)
+                                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                                .padding()
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(10)
+                                
+                                // Settings
+                                Button(action: {
+                                    print("Settings tapped")
+                                }) {
+                                    HStack {
+                                        Text("Settings")
+                                            .font(.body)
+                                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                                .padding()
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(10)
+                            }
+                            .padding(.horizontal, 20)
+                            .padding(.top, 30)
+                        }
                     }
+                }
+                .tabItem {
+                    Label("Profile", systemImage: "person")
+                }
             }
             .onAppear {
                 let appearance = UITabBarAppearance()

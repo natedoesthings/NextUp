@@ -44,6 +44,10 @@ struct SignUpView: View {
                             .padding(.bottom, 50)
                         
                         // Name
+                        Text("Name")
+                            .font(.subheadline)
+                            .multilineTextAlignment(.leading)
+                        
                         TextField("Name", text: $name)
                             .padding()
                         //.background(Color.white)
@@ -52,7 +56,13 @@ struct SignUpView: View {
                             .padding(.bottom, 10)
                         
                         // Email
-                        TextField("Email Address", text: $email)
+                        Text("Email Address")
+                            .font(.subheadline)
+                            .multilineTextAlignment(.leading)
+                        
+                        // Workaround to keep email placeholder text from becoming blue
+                        let at = "@"
+                        TextField("", text: $email, prompt: Text("name\(at)email.com"))
                             .padding()
                             .keyboardType(.emailAddress)
                             .autocapitalization(.none)
@@ -62,14 +72,18 @@ struct SignUpView: View {
                             .padding(.bottom, 10)
                         
                         // Password
-                        SecureField("Password", text: $password)
+                        Text("Password")
+                            .font(.subheadline)
+                            .multilineTextAlignment(.leading)
+                        
+                        SecureField("Create a password", text: $password)
                             .padding()
                         //.background(Color.white)
                             .cornerRadius(10)
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(hex: "#D3D3D3"), lineWidth: 1))
                         
                         // Confirm Password
-                        SecureField("Confirm Password", text: $confirmPassword)
+                        SecureField("Confirm password", text: $confirmPassword)
                             .padding()
                         //.background(Color.white)
                             .cornerRadius(10)
