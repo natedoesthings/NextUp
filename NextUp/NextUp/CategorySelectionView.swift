@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct CategorySelectionView: View {
+    
     @State private var selectedTopic: String? = nil
     @State private var currentStep: Double = 0.00
     @State private var topInterest: String = ""
@@ -73,7 +74,7 @@ struct CategorySelectionView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: nextView()) {
+                NavigationLink(destination: SpecificTopicSelectionView(selectedCategory: topInterest)) {
                     Text("Next")
                         .font(.system(size:15, weight: .semibold))
                         .foregroundColor(.white)
